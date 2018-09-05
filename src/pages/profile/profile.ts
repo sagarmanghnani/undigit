@@ -34,7 +34,7 @@ export class ProfilePage {
     let headers = new Headers();
     headers.append('Content-type', 'application/json');
 
-    this.http.post('http://localhost/undigit/undigit.php?rquest=profilePage', JSON.stringify(data), {headers:headers}).map(res => res.json()).subscribe(res => {
+    this.http.post('http://unidgittest.000webhostapp.com/undigit.php?rquest=profilePage', JSON.stringify(data)).map(res => res.json()).subscribe(res => {
       
       
       this.profiling = res.profile;

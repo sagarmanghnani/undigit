@@ -18,7 +18,7 @@ import {HomePage} from '../home/home';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
+  error:any;
   login:FormGroup;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public formBuilder:FormBuilder) {
     this.login = formBuilder.group({
@@ -41,13 +41,17 @@ export class LoginPage {
     let headers = new Headers();
     headers.append('Content-type', 'application/json');
 
-    this.http.post('http://localhost/undigit/undigit.php?rquest=login', JSON.stringify(data), {headers:headers}).map(res => res.json()).subscribe(res => {
+    this.http.post('http://unidgittest.000webhostapp.com/undigit.php?rquest=login', JSON.stringify(data)).map(res => res.json()).subscribe(res => {
       console.log(res);
       if(res.status == "Success")
       {
         this.navCtrl.push(ProfilePage, {
           id:res.id
         })
+      }
+      else
+      {
+        this.error = res.msg;
       }
     });
     

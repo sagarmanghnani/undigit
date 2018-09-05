@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, Form, ValidatorFn, AbstractControl 
 import { Http, Headers, Jsonp } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ProfilePage } from '../profile/profile';
+import { LoginPage } from '../login/login';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -11,6 +12,7 @@ import { ProfilePage } from '../profile/profile';
 export class HomePage {
 
   user:FormGroup;
+  error:any;
   constructor(public navCtrl: NavController, public http:Http, public formBuilder:FormBuilder) {
 
       this.user = formBuilder.group({
@@ -40,12 +42,14 @@ export class HomePage {
 
     let headers = new Headers();
     headers.append('Content-type', 'application/json');
-    this.http.post('http://localhost/undigit/undigit.php?rquest=signUp', JSON.stringify(data), {headers:headers}).map(res => res.json()).subscribe(res => {
+    this.http.post('http://unidgittest.000webhostapp.com/undigit.php?rquest=signUp', JSON.stringify(data)).map(res => res.json()).subscribe(res => {
       if(res.status = "Success")
       {
-        this.navCtrl.push(ProfilePage, {
-          id: res.id
-        } )
+        this.navCtrl.push(LoginPage)
+      }
+      else
+      {
+        this.error = res.msg;
       }
     });
     
